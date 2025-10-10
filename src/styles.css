@@ -1,0 +1,570 @@
+:root {
+  /* Paleta principal (hex + RGB para transparencias) */
+  --p-1: #223030; /* rgb(34,48,48) */
+  --p-1-rgb: 34, 48, 48;
+  --p-2: #523d35; /* rgb(82,61,53) */
+  --p-2-rgb: 82, 61, 53;
+  --p-3: #959d90; /* rgb(149,157,144) */
+  --p-3-rgb: 149, 157, 144;
+  --p-4: #bba58f; /* rgb(187,165,143) */
+  --p-4-rgb: 187, 165, 143;
+  --p-5: #e8d9cd; /* rgb(232,217,205) */
+  --p-5-rgb: 232, 217, 205;
+  --p-6: #efefe9; /* rgb(239,239,233) */
+  --p-6-rgb: 239, 239, 233;
+
+  /* Semánticos (usa las variables arriba para que cambiar la paleta afecte todo) */
+  --bg: var(--p-6);
+  --card: #ffffff;
+  --muted: var(--p-3);
+  --accent: var(--p-4);
+  --beige: var(--p-5);
+  --dark: var(--p-1);
+  --nav-bg: rgba(var(--p-5-rgb), 0.75); /* fondo translúcido de la navbar */
+  --nav-border: rgba(var(--p-2-rgb), 0.12);
+}
+
+body {
+  font-family: Inter, system-ui, Arial, sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--dark);
+}
+
+/* Use border-box globally so height includes padding (prevents sections growing past intended sizes) */
+html {
+  box-sizing: border-box;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+/* generic header link (kept for backward compat) */
+.header a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Navbar styles - desktop focus (1920x100 design) */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: 100px; /* altura fija según diseño de Figma */
+  display: flex;
+  align-items: center;
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  background: linear-gradient(
+    180deg,
+    rgba(var(--p-5-rgb), 0.9),
+    rgba(var(--p-6-rgb), 0.65)
+  );
+  border-bottom: 1px solid var(--nav-border);
+}
+
+.container-fluid {
+  width: min(1200px, 90%);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.brand-logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+.brand-title {
+  font-weight: 700;
+  color: var(--dark);
+  letter-spacing: 0.6px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+}
+.nav-links a {
+  color: var(--dark);
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.nav-links a:hover {
+  background: rgba(var(--p-5-rgb), 0.45);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.cart-btn {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+/* For larger screens mimic 1920px visual width: center and limit inner content width so design matches Figma at 1920px */
+@media (min-width: 1600px) {
+  .container-fluid {
+    width: 1200px;
+  }
+  .navbar {
+    height: 100px;
+  }
+}
+
+/* Grid / cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+.card {
+  background: var(--card);
+  padding: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(2, 6, 23, 0.06);
+}
+.card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+.card-body {
+  padding: 1rem;
+}
+.price {
+  color: var(--accent);
+  font-weight: 700;
+}
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.product-detail {
+  display: flex;
+  gap: 1rem;
+}
+.product-detail img {
+  width: 320px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.cart-list {
+  list-style: none;
+  padding: 0;
+}
+.cart-item {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+.cart-item img {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+}
+.cart-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+/* Hero section (desktop-focused) */
+.hero {
+  /* take the viewport height minus navbar height (100px), but don't exceed the original image height */
+  height: calc(100vh - 100px);
+  max-height: 980px; /* designed image height */
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  display: flex;
+  align-items: flex-start; /* content near top as in Figma */
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--p-2-rgb), 0.25),
+    rgba(0, 0, 0, 0.08)
+  );
+}
+.hero-inner {
+  position: relative;
+  padding-top: 40px;
+}
+.hero-text {
+  max-width: 920px;
+  padding-left: 40px;
+}
+.hero-title {
+  font-size: 120px;
+  margin: 0;
+  color: rgba(17, 17, 17, 0.9);
+  font-weight: 300;
+}
+.hero-sub {
+  font-size: 20px;
+  margin-top: 8px;
+  color: rgba(17, 17, 17, 0.7);
+}
+
+@media (max-width: 1200px) {
+  .hero {
+    height: 640px;
+  }
+  .hero-title {
+    font-size: 72px;
+  }
+}
+
+/* About / Quien Soy full-screen section */
+.about-screen {
+  height: 100vh; /* full screen section */
+  display: flex;
+  align-items: center;
+  background: var(--p-6); /* light background */
+}
+.about-inner {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  justify-content: space-between;
+  width: min(1200px, 90%);
+  margin: 0 auto;
+}
+.about-left {
+  flex: 0 0 420px;
+}
+.about-photo {
+  width: 100%;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 8px 30px rgba(34, 48, 48, 0.08);
+}
+.about-right {
+  flex: 1;
+  max-width: 720px;
+}
+.about-title {
+  font-size: 56px;
+  color: var(--p-2);
+  margin: 0 0 12px;
+}
+.about-text {
+  font-size: 20px;
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+@media (max-width: 1000px) {
+  .about-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .about-left {
+    width: 80%;
+  }
+  .about-right {
+    width: 90%;
+  }
+  .about-title {
+    font-size: 40px;
+  }
+}
+
+/* Feature two-column block */
+.feature-section {
+  padding: 56px 0;
+  background: var(--p-5); /* distinct beige */
+}
+.feature-inner {
+  width: min(1200px, 90%);
+  margin: 0 auto;
+  text-align: center;
+}
+.feature-title {
+  font-size: 36px;
+  margin-bottom: 28px;
+  color: var(--dark);
+  font-weight: 700;
+}
+.feature-cols {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+.feature-col {
+  flex: 1;
+  max-width: 540px;
+}
+.feature-col h4 {
+  font-size: 22px;
+  margin-bottom: 12px;
+  color: var(--dark);
+}
+.feature-col p {
+  font-size: 18px;
+  color: var(--dark);
+  line-height: 1.6;
+}
+.feature-image-wrap {
+  display: flex;
+  justify-content: center;
+}
+.feature-image {
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+/* Products section with white/card background to contrast */
+.products-section {
+  background: var(--card);
+  padding: 56px 0;
+}
+.products-section .container {
+  max-width: 1200px;
+}
+
+/* Reviews / Testimonials section */
+.reviews-section {
+  background: var(--p-6);
+  padding: 56px 0;
+}
+.reviews-inner {
+  width: min(1200px, 90%);
+  margin: 0 auto;
+  text-align: center;
+}
+.reviews-title {
+  font-size: 36px;
+  margin-bottom: 36px;
+  color: var(--dark);
+  font-weight: 700;
+}
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+.review-card {
+  background: transparent;
+  padding: 12px 16px;
+}
+.stars {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: var(--dark);
+}
+.review-text {
+  font-size: 16px;
+  color: var(--dark);
+  max-width: 320px;
+  margin: 0 auto 18px;
+  line-height: 1.5;
+}
+.review-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 8px;
+  display: block;
+}
+.review-name {
+  font-size: 14px;
+  color: var(--dark);
+}
+
+@media (min-width: 1600px) {
+  .reviews-section {
+    height: 1080px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 900px) {
+  .reviews-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .feature-cols {
+    flex-direction: column;
+    align-items: center;
+  }
+  .feature-col {
+    max-width: 720px;
+  }
+  .feature-title {
+    font-size: 28px;
+  }
+}
+
+/* Footer */
+.site-footer {
+  background: var(--p-2);
+  color: var(--p-6);
+  padding: 36px 0;
+  border-top: 3px solid rgba(var(--p-1-rgb), 0.06);
+}
+.footer-inner {
+  width: min(1200px, 90%);
+  margin: 0 auto;
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.footer-left {
+  flex: 1;
+}
+.footer-right {
+  width: 420px;
+}
+.meta-small {
+  font-size: 20px;
+  opacity: 0.95;
+  margin-bottom: 12px;
+}
+.footer-brand {
+  font-size: 64px;
+  margin: 6px 0 12px;
+  font-weight: 700;
+  color: var(--p-6);
+  line-height: 1;
+}
+.socials {
+  display: flex;
+  gap: 12px;
+  margin: 12px 0;
+}
+.socials a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: rgba(var(--p-6-rgb), 0.12);
+  color: var(--p-6);
+  text-decoration: none;
+}
+.copyright {
+  margin-top: 18px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+.contact-info {
+  font-size: 16px;
+  text-align: right;
+}
+.contact-info .muted {
+  opacity: 0.95;
+  margin-top: 6px;
+}
+.newsletter {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+  align-items: flex-end;
+}
+.email-input {
+  width: 320px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+}
+.btn-send {
+  background: var(--p-6);
+  color: var(--p-2);
+  padding: 10px 20px;
+  border-radius: 24px;
+  border: none;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .footer-right {
+    width: 100%;
+  }
+  .newsletter {
+    align-items: flex-start;
+  }
+  .email-input {
+    width: 100%;
+  }
+}
+
+/* Make feature section fill 1920x1080 on large screens (desktop) */
+@media (min-width: 1600px) {
+  .feature-section {
+    height: 1080px;
+    display: flex;
+    align-items: center;
+    overflow: hidden; /* prevent overflow by limiting image height */
+  }
+  .feature-inner {
+    padding-top: 40px;
+  }
+  .feature-image {
+    max-height: 560px; /* keep image from pushing section taller */
+  }
+}
