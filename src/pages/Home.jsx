@@ -62,6 +62,7 @@ export default function Home() {
         </div>
       </section>
 
+    
       {/* Reviews / Testimonials - last section of home (moved here) */}
       <section className="reviews-section">
         <div className="reviews-inner container-fluid">

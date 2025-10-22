@@ -14,16 +14,11 @@ export default function Navbar() {
         <nav className="nav-links">
           <Link to="/">INICIO</Link>
           <Link to="/talleres">TALLERES</Link>
-          <Link to="/asesorias">ASESORIAS</Link>
-          <Link to="/productos">PRODUCTOS</Link>
+          <Link to="/recetarios">RECETARIOS</Link>
           <Link to="/tienda">TIENDA</Link>
-          <Link to="/unete">UNETE</Link>
-          <Link to="/blog">BLOG</Link>
-          <Link to="/chat">CHAT</Link>
+          <Link to="/contacto">CONTACTO</Link>
+          <Link to="/login">LOG IN</Link>
         </nav>
-        <div className="nav-actions">
-          <Link to="/cart" className="cart-btn" aria-label="Carrito">🛒</Link>
-        </div>
       </div>
     </header>
   )
